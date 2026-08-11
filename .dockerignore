@@ -1,0 +1,20 @@
+# Never bake these into the image
+.env
+.env.*
+*.pem
+*.key
+venv/
+.git/
+.github/
+
+# Not needed to run the backend API
+frontend/
+tests/
+docs/
+*.md
+
+# Local/dev artifacts
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
