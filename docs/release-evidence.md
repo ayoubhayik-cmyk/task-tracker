@@ -49,10 +49,13 @@ Dockerfile/.dockerignore, a leaner `requirements-docker.txt`, `AGENTS.md`, and t
   `requirements-docker.txt`, app code copy, non-root user creation), image tagged
   `task-tracker:latest`.
 - Run command: `docker run -p 8000:8000 task-tracker`
-- `/health` check: **confirmed, real result** — with the container running, ran
+- `/health` check: **confirmed, real result.** With the container running, ran
   `curl -w "\nHTTP %{http_code}\n" http://127.0.0.1:8000/health` from a second
-  terminal against the live container. Actual output:
-  - Non-root check: **confirmed, real result** — `docker run task-tracker whoami`
+  terminal against the live container. Actual response body:
+  `{"status":"ok","timestamp":"2026-08-18T20:37:06.567975+00:00"}` followed by
+  `HTTP 200`. Independently confirmed by the container's own server log, which
+  recorded `"GET /health HTTP/1.1" 200 OK` for that same request.
+- Non-root check: **confirmed, real result.** `docker run task-tracker whoami`
   printed `appuser`, not `root`, matching the `USER appuser` instruction in the
   `Dockerfile`.
 - No-baked-secrets check: `.dockerignore` explicitly excludes `.env`, `.env.*`,
